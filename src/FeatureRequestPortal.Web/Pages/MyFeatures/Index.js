@@ -49,4 +49,16 @@
             ]
         })
     );
+
+    var createModal = new abp.ModalManager(abp.appPath + 'MyFeatures/CreateModal');
+
+    createModal.onResult(function () {
+        dataTable.ajax.reload();
+    });
+
+    $('#NewFeatureButton').click(function (e) {
+        e.preventDefault();
+        createModal.open();
+    });
+
 });

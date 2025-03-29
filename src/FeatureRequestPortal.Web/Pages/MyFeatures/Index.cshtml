@@ -6,13 +6,24 @@
 @inject IStringLocalizer<FeatureRequestPortalResource> L
 @section scripts
 {
-    <abp-script src="/Pages/MyFeatures/Index.js" />
+	<abp-script src="/Pages/MyFeatures/Index.js" />
 }
 <abp-card>
-    <abp-card-header>
-        <h2>@L["Features"]</h2>
-    </abp-card-header>
-    <abp-card-body>
-        <abp-table striped-rows="true" id="MyFeaturesTable"></abp-table>
-    </abp-card-body>
+	<abp-card-header>
+		<abp-row>
+			<abp-column size-md="_6">
+				<abp-card-title>@L["MyFeatures"]</abp-card-title>
+			</abp-column>
+			<abp-column size-md="_6" class="text-end">
+				<abp-button id="NewFeatureButton"
+							text="@L["NewFeature"].Value"
+							icon="plus"
+							button-type="Primary" />
+			</abp-column>
+		</abp-row>
+	</abp-card-header>
+
+	<abp-card-body>
+		<abp-table striped-rows="true" id="MyFeaturesTable"></abp-table>
+	</abp-card-body>
 </abp-card>
