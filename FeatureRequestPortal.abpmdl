@@ -1,0 +1,105 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "4.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.1.0",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "FeatureRequestPortal.Application": {
+      "path": "src/FeatureRequestPortal.Application/FeatureRequestPortal.Application.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.Application.Tests": {
+      "path": "test/FeatureRequestPortal.Application.Tests/FeatureRequestPortal.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "FeatureRequestPortal.Domain.Shared": {
+      "path": "src/FeatureRequestPortal.Domain.Shared/FeatureRequestPortal.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.Application.Contracts": {
+      "path": "src/FeatureRequestPortal.Application.Contracts/FeatureRequestPortal.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.HttpApi": {
+      "path": "src/FeatureRequestPortal.HttpApi/FeatureRequestPortal.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.HttpApi.Client": {
+      "path": "src/FeatureRequestPortal.HttpApi.Client/FeatureRequestPortal.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.Web": {
+      "path": "src/FeatureRequestPortal.Web/FeatureRequestPortal.Web.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.Web.Tests": {
+      "path": "test/FeatureRequestPortal.Web.Tests/FeatureRequestPortal.Web.Tests.abppkg",
+      "folder": "test"
+    },
+    "FeatureRequestPortal.EntityFrameworkCore.Tests": {
+      "path": "test/FeatureRequestPortal.EntityFrameworkCore.Tests/FeatureRequestPortal.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "FeatureRequestPortal.EntityFrameworkCore": {
+      "path": "src/FeatureRequestPortal.EntityFrameworkCore/FeatureRequestPortal.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.TestBase": {
+      "path": "test/FeatureRequestPortal.TestBase/FeatureRequestPortal.TestBase.abppkg",
+      "folder": "test"
+    },
+    "FeatureRequestPortal.Domain.Tests": {
+      "path": "test/FeatureRequestPortal.Domain.Tests/FeatureRequestPortal.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "FeatureRequestPortal.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/FeatureRequestPortal.HttpApi.Client.ConsoleTestApp/FeatureRequestPortal.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "FeatureRequestPortal.DbMigrator": {
+      "path": "src/FeatureRequestPortal.DbMigrator/FeatureRequestPortal.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "FeatureRequestPortal.Domain": {
+      "path": "src/FeatureRequestPortal.Domain/FeatureRequestPortal.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}
