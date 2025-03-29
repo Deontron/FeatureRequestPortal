@@ -14,6 +14,7 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using FeatureRequestPortal.MyFeatures;
 
 namespace FeatureRequestPortal.EntityFrameworkCore;
 
@@ -26,7 +27,7 @@ public class FeatureRequestPortalDbContext :
     IIdentityDbContext
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
-
+    public DbSet<MyFeature> MyFeatures { get; set; }
 
     #region Entities from the modules
 
@@ -78,7 +79,7 @@ public class FeatureRequestPortalDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureTenantManagement();
         builder.ConfigureBlobStoring();
-        
+
         /* Configure your own tables/entities inside here */
 
         //builder.Entity<YourEntity>(b =>
@@ -87,5 +88,13 @@ public class FeatureRequestPortalDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+        builder.Entity<MyFeature>(b =>
+        {
+            b.ToTable(FeatureRequestPortalConsts.DbTablePrefix + "MyFeatures",
+                FeatureRequestPortalConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+            b.Property(x => x.Title).IsRequired().HasMaxLength(128);
+        });
     }
 }
