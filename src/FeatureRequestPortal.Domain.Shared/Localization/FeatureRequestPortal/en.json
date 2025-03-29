@@ -1,9 +1,25 @@
 {
-  "Culture": "en",
-  "Texts": {
-    "AppName": "FeatureRequestPortal",
-    "Menu:Home": "Home",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome"
-  }
+    "Culture": "en",
+    "Texts": {
+        "Menu:Home": "Home",
+        "Welcome": "Welcome",
+        "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP. For more information, visit abp.io.",
+        "Menu:FeatureRequestPortal": "Feature Portal",
+        "Menu:MyFeatures": "Features",
+        "Actions": "Actions",
+        "Close": "Close",
+        "Delete": "Delete",
+        "Edit": "Edit",
+        "PublishDate": "Publish date",
+        "NewFeature": "New feature",
+        "Title": "Title",
+        "Category": "Category",
+        "Description": "Description",
+        "CreationTime": "Creation time",
+        "AreYouSure": "Are you sure?",
+        "AreYouSureToDelete": "Are you sure you want to delete this item?",
+        "Enum:MyFeatureCategory.0": "Undefined",
+        "Enum:MyFeatureCategory.1": "Update",
+        "Enum:MyFeatureCategory.2": "new"
+    }
 }

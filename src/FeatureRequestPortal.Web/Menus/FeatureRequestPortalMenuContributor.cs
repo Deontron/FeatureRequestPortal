@@ -35,6 +35,20 @@ public class FeatureRequestPortalMenuContributor : IMenuContributor
             )
         );
 
+        context.Menu.AddItem(
+            new ApplicationMenuItem(
+                "FeatureRequestPortal",
+                l["Menu:FeatureRequestPortal"],
+                icon: "fa fa-book"
+                ).AddItem(
+                    new ApplicationMenuItem(
+                    "FeatureRequestPortal.MyFeatures",
+                    l["Menu:MyFeatures"],
+                    url: "/MyFeatures"
+                )
+            )
+        );
+
 
         //Administration
         var administration = context.Menu.GetAdministration();
@@ -42,7 +56,7 @@ public class FeatureRequestPortalMenuContributor : IMenuContributor
 
         //Administration->Identity
         administration.SetSubItemOrder(IdentityMenuNames.GroupName, 1);
-    
+
         if (MultiTenancyConsts.IsEnabled)
         {
             administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
@@ -51,12 +65,12 @@ public class FeatureRequestPortalMenuContributor : IMenuContributor
         {
             administration.TryRemoveMenuItem(TenantManagementMenuNames.GroupName);
         }
-        
+
         administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
 
         //Administration->Settings
         administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 7);
-        
+
         return Task.CompletedTask;
     }
 }
