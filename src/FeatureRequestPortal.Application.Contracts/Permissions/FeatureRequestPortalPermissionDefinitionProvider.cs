@@ -9,7 +9,12 @@ public class FeatureRequestPortalPermissionDefinitionProvider : PermissionDefini
 {
     public override void Define(IPermissionDefinitionContext context)
     {
-        var myGroup = context.AddGroup(FeatureRequestPortalPermissions.GroupName);
+        var featureRequestPortalGroup = context.AddGroup(FeatureRequestPortalPermissions.GroupName, L("Permission:FeatureRequestPortal"));
+
+        var myFeaturesPermission = featureRequestPortalGroup.AddPermission(FeatureRequestPortalPermissions.MyFeatures.Default, L("Permission:MyFeatures"));
+        myFeaturesPermission.AddChild(FeatureRequestPortalPermissions.MyFeatures.Create, L("Permission:MyFeatures.Create"));
+        myFeaturesPermission.AddChild(FeatureRequestPortalPermissions.MyFeatures.Edit, L("Permission:MyFeatures.Edit"));
+        myFeaturesPermission.AddChild(FeatureRequestPortalPermissions.MyFeatures.Delete, L("Permission:MyFeatures.Delete"));
 
         //Define your own permissions here. Example:
         //myGroup.AddPermission(FeatureRequestPortalPermissions.MyPermission1, L("Permission:MyPermission1"));

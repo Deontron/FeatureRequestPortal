@@ -17,12 +17,14 @@
                             [
                                 {
                                     text: l('Edit'),
+                                    visible: abp.auth.isGranted('FeatureRequestPortal.MyFeatures.Edit'), 
                                     action: function (data) {
                                         editModal.open({ id: data.record.id });
                                     }
                                 },
                                 {
                                     text: l('Delete'),
+                                    visible: abp.auth.isGranted('FeatureRequestPortal.MyFeatures.Delete'), 
                                     confirmMessage: function (data) {
                                         return l(
                                             'FeatureDeletionConfirmationMessage',

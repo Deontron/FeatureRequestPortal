@@ -1,9 +1,12 @@
 ﻿@page
 @using FeatureRequestPortal.Localization
+@using FeatureRequestPortal.Permissions
 @using FeatureRequestPortal.Web.Pages.MyFeatures
 @using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Authorization
 @model IndexModel
 @inject IStringLocalizer<FeatureRequestPortalResource> L
+@inject IAuthorizationService AuthorizationService
 @section scripts
 {
 	<abp-script src="/Pages/MyFeatures/Index.js" />
@@ -15,10 +18,13 @@
 				<abp-card-title>@L["MyFeatures"]</abp-card-title>
 			</abp-column>
 			<abp-column size-md="_6" class="text-end">
-				<abp-button id="NewFeatureButton"
+				@if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Create))
+                {
+					<abp-button id="NewFeatureButton"
 							text="@L["NewFeature"].Value"
 							icon="plus"
 							button-type="Primary" />
+				}
 			</abp-column>
 		</abp-row>
 	</abp-card-header>
