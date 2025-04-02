@@ -26,7 +26,8 @@ namespace FeatureRequestPortal
                         Title = "1984",
                         Category = MyFeatureCategory.Update,
                         PublishDate = new DateTime(1949, 6, 8),
-                        Description = "19.84f"
+                        Description = "19.84f",
+                        IsApproved = false
                     },
                     autoSave: true
                 );
@@ -37,7 +38,8 @@ namespace FeatureRequestPortal
                         Title = "2002",
                         Category = MyFeatureCategory.New,
                         PublishDate = new DateTime(1949, 6, 8),
-                        Description = "19.84f"
+                        Description = "19.84f",
+                        IsApproved = true
                     },
                     autoSave: true
                 );

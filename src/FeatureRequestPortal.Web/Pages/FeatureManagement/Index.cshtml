@@ -1,7 +1,7 @@
 ﻿@page
 @using FeatureRequestPortal.Localization
 @using FeatureRequestPortal.Permissions
-@using FeatureRequestPortal.Web.Pages.MyFeatures
+@using FeatureRequestPortal.Web.Pages.FeatureManagement
 @using Microsoft.Extensions.Localization
 @using Microsoft.AspNetCore.Authorization
 @model IndexModel
@@ -9,13 +9,13 @@
 @inject IAuthorizationService AuthorizationService
 @section scripts
 {
-	<abp-script src="/Pages/MyFeatures/Index.js" />
+	<abp-script src="/Pages/FeatureManagement/Index.js" />
 }
 <abp-card>
 	<abp-card-header>
 		<abp-row>
 			<abp-column size-md="_6">
-				<abp-card-title>@L["MyFeatures"]</abp-card-title>
+				<abp-card-title>@L["FeatureManagement"]</abp-card-title>
 			</abp-column>
 			<abp-column size-md="_6" class="text-end">
 				@if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Create))
@@ -30,8 +30,6 @@
 	</abp-card-header>
 
 	<abp-card-body>
-		<abp-row id="featureContainer">
-			<!-- Veriler buraya JavaScript ile eklenecek -->
-		</abp-row>
+		<abp-table striped-rows="true" id="MyFeaturesTable"></abp-table>
 	</abp-card-body>
 </abp-card>

@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace FeatureRequestPortal.Migrations
 {
     [DbContext(typeof(FeatureRequestPortalDbContext))]
-    [Migration("20250329095507_Created_MyFeature_Entity")]
-    partial class Created_MyFeature_Entity
+    [Migration("20250401145943_Created_Feature_Entity")]
+    partial class Created_Feature_Entity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,9 @@ namespace FeatureRequestPortal.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("timestamp without time zone")

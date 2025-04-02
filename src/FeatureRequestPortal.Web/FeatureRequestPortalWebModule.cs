@@ -152,7 +152,7 @@ public class FeatureRequestPortalWebModule : AbpModule
 
         Configure<RazorPagesOptions>(options =>
         {
-            options.Conventions.AuthorizePage("/MyFeatures/Index", FeatureRequestPortalPermissions.MyFeatures.Default);
+            //options.Conventions.AuthorizePage("/MyFeatures/Index", FeatureRequestPortalPermissions.MyFeatures.Default);
             options.Conventions.AuthorizePage("/MyFeatures/CreateModal", FeatureRequestPortalPermissions.MyFeatures.Create);
             options.Conventions.AuthorizePage("/MyFeatures/EditModal", FeatureRequestPortalPermissions.MyFeatures.Edit);
         });

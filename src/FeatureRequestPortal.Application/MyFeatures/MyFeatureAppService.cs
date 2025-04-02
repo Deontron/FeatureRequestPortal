@@ -8,18 +8,19 @@ namespace FeatureRequestPortal.MyFeatures
 {
     public class MyFeatureAppService :
     CrudAppService<
-        MyFeature, 
-        MyFeatureDto, 
-        Guid, 
-        PagedAndSortedResultRequestDto, 
-        CreateUpdateMyFeatureDto>, 
-    IMyFeatureAppService 
+        MyFeature,
+        MyFeatureDto,
+        Guid,
+        PagedAndSortedResultRequestDto,
+        CreateUpdateMyFeatureDto>,
+    IMyFeatureAppService
     {
+
         public MyFeatureAppService(IRepository<MyFeature, Guid> repository)
         : base(repository)
         {
             GetPolicyName = FeatureRequestPortalPermissions.MyFeatures.Default;
-            GetListPolicyName = FeatureRequestPortalPermissions.MyFeatures.Default;
+            //GetListPolicyName = FeatureRequestPortalPermissions.MyFeatures.Default;
             CreatePolicyName = FeatureRequestPortalPermissions.MyFeatures.Create;
             UpdatePolicyName = FeatureRequestPortalPermissions.MyFeatures.Edit;
             DeletePolicyName = FeatureRequestPortalPermissions.MyFeatures.Delete;

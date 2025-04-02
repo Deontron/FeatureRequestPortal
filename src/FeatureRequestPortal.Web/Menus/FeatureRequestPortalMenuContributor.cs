@@ -45,8 +45,13 @@ public class FeatureRequestPortalMenuContributor : IMenuContributor
                     "FeatureRequestPortal.MyFeatures",
                     l["Menu:MyFeatures"],
                     url: "/MyFeatures"
-                ).RequirePermissions(FeatureRequestPortalPermissions.MyFeatures.Default)
-            )
+                )
+            ).AddItem(
+                    new ApplicationMenuItem(
+                    "FeatureRequestPortal.FeatureManagement",
+                    l["Menu:MyFeaturesManaging"],
+                    url: "/FeatureManagement"
+                ))
         );
 
 
