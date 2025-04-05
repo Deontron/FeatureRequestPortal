@@ -29,7 +29,8 @@
         "Permission:MyFeatures.Create": "Creating new Features",
         "Permission:MyFeatures.Edit": "Editing the Features",
         "Permission:MyFeatures.Approve": "Approving the Features",
-        "Permission:MyFeatures.Delete": "Deleting the Features"
+        "Permission:MyFeatures.Delete": "Deleting the Features",
+        "Permission:MyFeatures.Manage": "Manage the Features"
 
     }
 }

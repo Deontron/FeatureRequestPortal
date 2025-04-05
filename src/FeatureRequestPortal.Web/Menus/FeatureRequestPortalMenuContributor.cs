@@ -51,7 +51,7 @@ public class FeatureRequestPortalMenuContributor : IMenuContributor
                     "FeatureRequestPortal.FeatureManagement",
                     l["Menu:MyFeaturesManaging"],
                     url: "/FeatureManagement"
-                ))
+                ).RequirePermissions(FeatureRequestPortalPermissions.MyFeatures.Manage))
         );
 
 

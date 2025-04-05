@@ -16,5 +16,6 @@ public static class FeatureRequestPortalPermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
         public const string Approve = Default + ".Approve";
+        public const string Manage = Default + ".Manage";
     }
 }
