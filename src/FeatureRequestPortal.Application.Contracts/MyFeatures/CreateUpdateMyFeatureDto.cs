@@ -13,10 +13,6 @@ namespace FeatureRequestPortal.MyFeatures
         public MyFeatureCategory Category { get; set; } = MyFeatureCategory.Undefined;
 
         [Required]
-        [DataType(DataType.Date)]
-        public DateTime PublishDate { get; set; } = DateTime.Now;
-
-        [Required]
         [StringLength(500)]
         public string Description { get; set; } = string.Empty;
     }

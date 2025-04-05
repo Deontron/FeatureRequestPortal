@@ -67,8 +67,8 @@ namespace FeatureRequestPortal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<DateTime>("PublishDate")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("Point")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()

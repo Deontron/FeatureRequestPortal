@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace FeatureRequestPortal.Migrations
 {
     [DbContext(typeof(FeatureRequestPortalDbContext))]
-    [Migration("20250401145943_Created_Feature_Entity")]
-    partial class Created_Feature_Entity
+    [Migration("20250402203315_Updated_Feature_Entity")]
+    partial class Updated_Feature_Entity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,8 +70,8 @@ namespace FeatureRequestPortal.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<DateTime>("PublishDate")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("Point")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()

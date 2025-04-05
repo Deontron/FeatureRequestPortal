@@ -12,5 +12,6 @@ namespace FeatureRequestPortal.MyFeatures
         PagedAndSortedResultRequestDto, //Used for paging/sorting
         CreateUpdateMyFeatureDto> //Used to create/update a book
     {
+        public Task<object> UpdateFeatureScoreAsync(UpdateFeatureScoreDto input);
     }
 }

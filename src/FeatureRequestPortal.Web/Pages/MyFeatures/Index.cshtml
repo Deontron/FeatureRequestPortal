@@ -10,12 +10,13 @@
 @section scripts
 {
 	<abp-script src="/Pages/MyFeatures/Index.js" />
+    <script src="https://cdn.jsdelivr.net/npm/abp-web-resources@4.4.4/abp-web.min.js"></script>
 }
 <abp-card>
 	<abp-card-header>
 		<abp-row>
 			<abp-column size-md="_6">
-				<abp-card-title>@L["MyFeatures"]</abp-card-title>
+				<abp-card-title>@L["Feature Requests"]</abp-card-title>
 			</abp-column>
 			<abp-column size-md="_6" class="text-end">
 				@if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Create))
@@ -31,7 +32,79 @@
 
 	<abp-card-body>
 		<abp-row id="featureContainer">
-			<!-- Veriler buraya JavaScript ile eklenecek -->
 		</abp-row>
 	</abp-card-body>
 </abp-card>
+
+<abp-modal id="featureDetailsModal" size="Large" title="Özellik Detayları">
+    <abp-modal-body>
+        <div class="modal-content-detail">
+            <div class="mb-3">
+                <h5>Başlık:</h5>
+                <p id="featureTitle" class="modal-content-text"></p>
+            </div>
+            <div class="mb-3">
+                <h5>Açıklama:</h5>
+                <p id="featureDescription" class="modal-content-text"></p>
+            </div>
+            <div class="mb-3">
+                <h5>Yaratıcı:</h5>
+                <p id="featureCreator" class="modal-content-text"></p>
+            </div>
+            <div class="mb-3">
+                <h5>Tarih:</h5>
+                <p id="featureCreationDate" class="modal-content-text"></p>
+            </div>
+            <div class="mb-3">
+                <h5>Puan:</h5>
+                <p id="featurePoint" class="modal-content-text"></p>
+            </div>
+        </div>
+    </abp-modal-body>
+    <abp-modal-footer>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+    </abp-modal-footer>
+</abp-modal>
+
+<style>
+    .modal-content-detail {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        color: #333;
+    }
+
+    .modal-content-text {
+        color: #555;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-top: 8px;
+    }
+
+    .mb-3 h5 {
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+</style>
+
