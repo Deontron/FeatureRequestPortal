@@ -1,5 +1,6 @@
 using FeatureRequestPortal.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FeatureRequestPortal.MyFeatures
@@ -25,6 +26,19 @@ namespace FeatureRequestPortal.MyFeatures
             }
 
             return Ok(result);
+        }
+
+        [HttpGet("user-score")]
+        public async Task<ActionResult<UserFeatureScoreDto>> GetUserFeatureScore(Guid featureId)
+        {
+            var userFeatureScore = await _featureAppService.GetUserFeatureScoreAsync(featureId);
+
+            if (userFeatureScore == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userFeatureScore);
         }
     }
 }

@@ -6,6 +6,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Users;
 
 namespace FeatureRequestPortal.MyFeatures
 {
@@ -20,11 +21,16 @@ namespace FeatureRequestPortal.MyFeatures
         IMyFeatureAppService
     {
         private readonly IRepository<MyFeature, Guid> _featureRepository;
+        private readonly IRepository<UserFeatureScore, Guid> _userFeatureScoreRepository;
+        private readonly ICurrentUser _currentUser;
 
-        public MyFeatureAppService(IRepository<MyFeature, Guid> repository)
+        public MyFeatureAppService(IRepository<MyFeature, Guid> repository, IRepository<UserFeatureScore, Guid> userFeatureScoreRepository,
+        ICurrentUser currentUser)
         : base(repository)
         {
             _featureRepository = repository;
+            _userFeatureScoreRepository = userFeatureScoreRepository;
+            _currentUser = currentUser;
 
             GetPolicyName = FeatureRequestPortalPermissions.MyFeatures.Default;
             //CreatePolicyName = FeatureRequestPortalPermissions.MyFeatures.Create;
@@ -59,6 +65,63 @@ namespace FeatureRequestPortal.MyFeatures
                 return null;
             }
 
+            var userScore = await _userFeatureScoreRepository.FirstOrDefaultAsync(u => u.UserId == _currentUser.Id && u.FeatureId == input.FeatureId);
+
+            if (userScore != null)
+            {
+                if (userScore.ScoreType == input.ScoreType)
+                {
+                    if (input.ScoreType == "like")
+                    {
+                        feature.Point--;  // Puanı azalt
+                        userScore.ScoreType = "none";  // Skor türünü kaldır
+                        await _userFeatureScoreRepository.UpdateAsync(userScore);  // Güncelleme
+                        await _featureRepository.UpdateAsync(feature);  // Özellik puanını güncelle
+                        return new
+                        {
+                            message = "Like işlemi iptal edildi.",
+                            point = feature.Point
+                        };
+                    }
+                    else if (input.ScoreType == "dislike")
+                    {
+                        feature.Point++;
+                        userScore.ScoreType = "none";
+                        await _userFeatureScoreRepository.UpdateAsync(userScore);
+                        await _featureRepository.UpdateAsync(feature);
+                        return new
+                        {
+                            message = "Dislike işlemi iptal edildi.",
+                            point = feature.Point
+                        };
+                    }
+                }
+                else
+                {
+                    if (userScore.ScoreType == "like" && input.ScoreType == "dislike")
+                    {
+                        feature.Point--;
+                    }
+                    else if (userScore.ScoreType == "dislike" && input.ScoreType == "like")
+                    {
+                        feature.Point++;
+                    }
+
+                    userScore.ScoreType = input.ScoreType;
+                    await _userFeatureScoreRepository.UpdateAsync(userScore);
+                }
+            }
+            else
+            {
+                var newUserFeatureScore = new UserFeatureScore
+                {
+                    UserId = (Guid)_currentUser.Id,
+                    FeatureId = input.FeatureId,
+                    ScoreType = input.ScoreType
+                };
+                await _userFeatureScoreRepository.InsertAsync(newUserFeatureScore);
+            }
+
             if (input.ScoreType == "like")
             {
                 feature.Point++;
@@ -78,6 +141,23 @@ namespace FeatureRequestPortal.MyFeatures
             {
                 message = "Puan başarıyla güncellendi.",
                 point = feature.Point
+            };
+        }
+
+
+        public async Task<UserFeatureScoreDto> GetUserFeatureScoreAsync(Guid featureId)
+        {
+            var userFeatureScore = await _userFeatureScoreRepository
+                .FirstOrDefaultAsync(u => u.UserId == _currentUser.Id && u.FeatureId == featureId);
+
+            if (userFeatureScore == null)
+            {
+                return new UserFeatureScoreDto { ScoreType = "none" };
+            }
+
+            return new UserFeatureScoreDto
+            {
+                ScoreType = userFeatureScore.ScoreType
             };
         }
     }

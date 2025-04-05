@@ -30,8 +30,4 @@
     <PackageReference Include="Volo.Abp.TenantManagement.Domain" Version="9.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MyUsers\" />
-  </ItemGroup>
-
 </Project>

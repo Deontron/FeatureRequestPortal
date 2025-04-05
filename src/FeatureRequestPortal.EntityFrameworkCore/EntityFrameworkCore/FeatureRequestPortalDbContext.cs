@@ -28,6 +28,7 @@ public class FeatureRequestPortalDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<MyFeature> MyFeatures { get; set; }
+    public DbSet<UserFeatureScore> UserFeatureScores { get; set; }
 
     #region Entities from the modules
 
@@ -95,6 +96,13 @@ public class FeatureRequestPortalDbContext :
                 FeatureRequestPortalConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Title).IsRequired().HasMaxLength(128);
+        });
+
+        builder.Entity<UserFeatureScore>(b =>
+        {
+            b.ToTable(FeatureRequestPortalConsts.DbTablePrefix + "UserFeatureScore",
+                FeatureRequestPortalConsts.DbSchema);
+            b.ConfigureByConvention();
         });
     }
 }

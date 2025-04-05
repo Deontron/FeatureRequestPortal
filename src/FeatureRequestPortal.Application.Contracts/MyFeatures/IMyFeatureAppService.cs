@@ -13,5 +13,6 @@ namespace FeatureRequestPortal.MyFeatures
         CreateUpdateMyFeatureDto> //Used to create/update a book
     {
         public Task<object> UpdateFeatureScoreAsync(UpdateFeatureScoreDto input);
+        public Task<UserFeatureScoreDto> GetUserFeatureScoreAsync(Guid featureId);
     }
 }
