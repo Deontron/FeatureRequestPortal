@@ -9,31 +9,31 @@
 @inject IAuthorizationService AuthorizationService
 @section scripts
 {
-	<abp-script src="/Pages/MyFeatures/Index.js" />
+    <abp-script src="/Pages/MyFeatures/Index.js" />
     <script src="https://cdn.jsdelivr.net/npm/abp-web-resources@4.4.4/abp-web.min.js"></script>
 }
 <abp-card>
-	<abp-card-header>
-		<abp-row>
-			<abp-column size-md="_6">
-				<abp-card-title>@L["Feature Requests"]</abp-card-title>
-			</abp-column>
-			<abp-column size-md="_6" class="text-end">
-				@if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Create))
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["Feature Requests"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Create))
                 {
-					<abp-button id="NewFeatureButton"
-							text="@L["NewFeature"].Value"
-							icon="plus"
-							button-type="Primary" />
-				}
-			</abp-column>
-		</abp-row>
-	</abp-card-header>
+                    <abp-button id="NewFeatureButton"
+                                text="@L["NewFeature"].Value"
+                                icon="plus"
+                                button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
 
-	<abp-card-body>
-		<abp-row id="featureContainer">
-		</abp-row>
-	</abp-card-body>
+    <abp-card-body>
+        <abp-row id="featureContainer">
+        </abp-row>
+    </abp-card-body>
 </abp-card>
 
 <abp-modal id="featureDetailsModal" size="Large" title="Özellik Detayları">
@@ -42,6 +42,10 @@
             <div class="mb-3">
                 <h5>Başlık:</h5>
                 <p id="featureTitle" class="modal-content-text"></p>
+            </div>
+            <div class="mb-3">
+                <h5>Kategori:</h5>
+                <p id="featureCategory" class="modal-content-text"></p>
             </div>
             <div class="mb-3">
                 <h5>Açıklama:</h5>
@@ -63,6 +67,14 @@
     </abp-modal-body>
     <abp-modal-footer>
         <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        @if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Edit))
+        {
+            <button id="EditFeatureButton" class="btn btn-primary">Düzenle</button>
+        }
+        @if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Delete))
+        {
+            <button id="DeleteFeatureButton" class="btn btn-danger">Sil</button>
+        }
     </abp-modal-footer>
 </abp-modal>
 
@@ -102,9 +114,37 @@
         border-radius: 5px;
     }
 
-    .btn-secondary:hover {
-        background-color: #5a6268;
-        border-color: #545b62;
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
     }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
 </style>
 

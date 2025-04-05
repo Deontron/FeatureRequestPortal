@@ -7,7 +7,7 @@
                 url: abp.appPath + 'api/app/my-feature',
                 type: 'GET'
             });
-            renderFeatures(data.items);
+            renderFeatures(data.items.filter(feature => feature.isApproved));
         } catch (error) {
             console.error("Veri çekme hatası:", error);
         }
@@ -40,9 +40,11 @@
                 }
             } catch (error) {
                 console.error("Puan durumu çekilirken hata:", error);
-                likeClass = '';
-                dislikeClass = '';
+                likeClass = 'btn-outline-success';
+                dislikeClass = 'btn-outline-danger';
             }
+
+            let categoryText = localizeCategory(feature.category);
 
             let cardHtml = `
                 <div class="col-md-6 col-lg-4">
@@ -55,7 +57,7 @@
                             <p>${feature.description}</p>
                         </div>
                         <div class="card-footer text-end">
-                            <p>Yaratıcı: ${feature.id}</p>
+                            <p>Kategori: ${categoryText}</p>
                             <button class="btn ${likeClass} like-btn" data-id="${feature.id}">
                                 <i class="fas fa-thumbs-up"></i>
                             </button>
@@ -67,7 +69,8 @@
                                 data-id="${feature.id}" 
                                 data-title="${feature.title}" 
                                 data-description="${feature.description}"
-                                data-creator="${feature.id}"
+                                data-category="${feature.category}"
+                                data-creator="${feature.creatorId}"
                                 data-date="${new Date(feature.creationTime).toLocaleDateString()}"
                                 data-point="${feature.point}">
                                 Detaylar
@@ -79,23 +82,23 @@
             container.append(cardHtml);
         }
 
-        $(".like-btn").click(function () {
+        $(document).on("click", ".like-btn", function () {
             let featureId = $(this).data("id");
             updateFeaturePoint(featureId, "like");
         });
 
-        $(".dislike-btn").click(function () {
+        $(document).on("click", ".dislike-btn", function () {
             let featureId = $(this).data("id");
             updateFeaturePoint(featureId, "dislike");
         });
 
-        $(document).on("click", ".details-btn", function () {
+        $(document).on("click", ".details-btn", async function () {
             let featureId = $(this).data("id");
             let featureTitle = $(this).data("title");
             let featureDescription = $(this).data("description");
             let featureCreator = $(this).data("creator");
             let featureCreationDate = $(this).data("date");
-            let featurePoint = $(this).data("point");
+            let featureCategory = $(this).data("category");
 
             $("#featureTitle")
                 .text(featureTitle)
@@ -104,7 +107,26 @@
             $("#featureDescription").text(featureDescription);
             $("#featureCreator").text(featureCreator);
             $("#featureCreationDate").text(featureCreationDate);
-            $("#featurePoint").text(featurePoint);
+            $("#featureCategory").text(localizeCategory(featureCategory));
+
+            try {
+                let response = await abp.ajax({
+                    url: abp.appPath + `api/app/my-feature/${featureId}`,
+                    type: 'GET'
+                });
+                $("#featurePoint").text(response.point);
+            } catch (error) {
+                console.error("Puan çekilirken hata:", error);
+            }
+
+            let currentUser = abp.currentUser;
+            if (currentUser.id === featureCreator || currentUser.roles.includes('admin')) {
+                $("#EditFeatureButton").show();
+                $("#DeleteFeatureButton").show();
+            } else {
+                $("#EditFeatureButton").hide();
+                $("#DeleteFeatureButton").hide();
+            }
 
             $("#featureDetailsModal").modal("show");
         });
@@ -113,14 +135,44 @@
     }
 
     var createModal = new abp.ModalManager(abp.appPath + 'MyFeatures/CreateModal');
+    var editModal = new abp.ModalManager(abp.appPath + 'MyFeatures/EditModal');
 
     createModal.onResult(function () {
         loadFeatures();
     });
 
-    $('#NewFeatureButton').click(function (e) {
+    editModal.onResult(function () {
+        loadFeatures();
+    });
+
+    $(document).on("click", "#NewFeatureButton", function (e) {
         e.preventDefault();
         createModal.open();
+    });
+
+    $(document).on("click", "#EditFeatureButton", function (e) {
+        e.preventDefault();
+        let featureId = $("#featureTitle").data("id");
+        editModal.open({ id: featureId });
+    });
+
+    $(document).on("click", "#DeleteFeatureButton", async function (e) {
+        e.preventDefault();
+        let featureId = $("#featureTitle").data("id");
+        abp.message.confirm(
+            abp.localization.localize('FeatureDeletionConfirmationMessage', 'FeatureRequestPortal', $("#featureTitle").text()),
+            function (isConfirmed) {
+                if (isConfirmed) {
+                    featureRequestPortal.myFeatures.myFeature
+                        .delete(featureId)
+                        .then(function () {
+                            abp.notify.info(abp.localization.localize('SuccessfullyDeleted', 'FeatureRequestPortal'));
+                            $("#featureDetailsModal").modal("hide");
+                            loadFeatures();
+                        });
+                }
+            }
+        );
     });
 
     function disableButtonsForGuests() {
@@ -146,7 +198,7 @@
 
             let likeButton = $(`button.like-btn[data-id="${featureId}"]`);
             let dislikeButton = $(`button.dislike-btn[data-id="${featureId}"]`);
-            
+
             if (changeType === "like") {
                 if (likeButton.hasClass("btn-success")) {
                     likeButton.removeClass("btn-success").addClass("btn-outline-success");
@@ -162,8 +214,26 @@
                     likeButton.removeClass("btn-success").addClass("btn-outline-success");
                 }
             }
+
+            let currentModalFeatureId = $("#featureTitle").data("id");
+            if (currentModalFeatureId === featureId) {
+                try {
+                    let updatedFeature = await abp.ajax({
+                        url: abp.appPath + `api/app/my-feature/${featureId}`,
+                        type: 'GET'
+                    });
+                    $("#featurePoint").text(updatedFeature.point);
+                } catch (error) {
+                    console.error("Puan çekilirken hata:", error);
+                }
+            }
         } catch (error) {
             console.error("Puan güncellenirken hata:", error);
         }
     }
+
+    function localizeCategory(category) {
+        return abp.localization.localize('Enum:MyFeatureCategory.' + category, 'FeatureRequestPortal');
+    }
 });
+
