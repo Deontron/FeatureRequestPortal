@@ -7,7 +7,7 @@ namespace FeatureRequestPortal.Web.Pages.MyFeatures
     public class CreateModalModel : FeatureRequestPortalPageModel
     {
         [BindProperty]
-        public CreateUpdateMyFeatureDto MyFeature { get; set; }
+        public CreateMyFeatureDto MyFeature { get; set; }
 
         private readonly IMyFeatureAppService _featureAppService;
 
@@ -18,12 +18,17 @@ namespace FeatureRequestPortal.Web.Pages.MyFeatures
 
         public void OnGet()
         {
-            MyFeature = new CreateUpdateMyFeatureDto();
+            MyFeature = new CreateMyFeatureDto();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            await _featureAppService.CreateAsync(MyFeature);
+            await _featureAppService.CreateAsync(new UpdateMyFeatureDto
+            {
+                Title = MyFeature.Title,
+                Category = MyFeature.Category,
+                Description = MyFeature.Description,
+            });
             return NoContent();
         }
     }

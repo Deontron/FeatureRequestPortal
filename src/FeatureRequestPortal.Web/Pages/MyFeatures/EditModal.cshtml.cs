@@ -12,7 +12,7 @@ public class EditModalModel : FeatureRequestPortalPageModel
     public Guid Id { get; set; }
 
     [BindProperty]
-    public CreateUpdateMyFeatureDto MyFeature { get; set; }
+    public UpdateMyFeatureDto MyFeature { get; set; }
 
     private readonly IMyFeatureAppService _myFeatureAppService;
 
@@ -24,12 +24,12 @@ public class EditModalModel : FeatureRequestPortalPageModel
     public async Task OnGetAsync()
     {
         var myFeatureDto = await _myFeatureAppService.GetAsync(Id);
-        MyFeature = ObjectMapper.Map<MyFeatureDto, CreateUpdateMyFeatureDto>(myFeatureDto);
+        MyFeature = ObjectMapper.Map<MyFeatureDto, UpdateMyFeatureDto>(myFeatureDto);
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        await _myFeatureAppService.UpdateAsync(Id, MyFeature);
+        await _myFeatureAppService.UpdateAsync(Id, new CreateMyFeatureDto { Title = MyFeature.Title, Category = MyFeature.Category, Description = MyFeature.Description });
         return NoContent();
     }
 }

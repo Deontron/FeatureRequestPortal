@@ -47,23 +47,19 @@
                                     visible: abp.auth.isGranted('FeatureRequestPortal.MyFeatures.Approve'),
                                     action: function (data) {
                                         featureRequestPortal.myFeatures.myFeature
-                                            .update(data.record.id, {
-                                                id: data.record.id,
-                                                title: data.record.title,
-                                                description: data.record.description,
-                                                category: data.record.category,
+                                            .approve({
+                                                featureId: data.record.id,  // 👈 BU ŞART!
                                                 isApproved: true
                                             })
                                             .then(function () {
-                                                abp.notify.info(
-                                                    l('SuccessfullyApproved')
-                                                );
+                                                abp.notify.info(l('SuccessfullyApproved'));
                                                 dataTable.ajax.reload();
                                             }).catch(function (error) {
                                                 console.error("Onaylanırken hata:", error);
                                             });
                                     }
                                 }
+
                             ]
                     }
                 },

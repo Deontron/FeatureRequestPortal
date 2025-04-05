@@ -1,4 +1,5 @@
 using FeatureRequestPortal.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -40,5 +41,14 @@ namespace FeatureRequestPortal.MyFeatures
 
             return Ok(userFeatureScore);
         }
+
+        [HttpPost]
+        [Route("approve")]
+        [Authorize("FeatureRequestPortal.MyFeatures.Approve")]
+        public Task ApproveAsync(UpdateFeatureApproveDto input)
+        {
+            return _featureAppService.ApproveFeatureAsync(input);
+        }
+
     }
 }

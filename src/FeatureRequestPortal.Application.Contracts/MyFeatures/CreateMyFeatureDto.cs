@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FeatureRequestPortal.MyFeatures
 {
-    public class CreateUpdateMyFeatureDto
+    public class CreateMyFeatureDto
     {
         [Required]
         [StringLength(128)]
@@ -15,9 +14,5 @@ namespace FeatureRequestPortal.MyFeatures
         [Required]
         [StringLength(500)]
         public string Description { get; set; } = string.Empty;
-
-        public bool IsApproved { get; set; } = false;
-
-        public int Point { get; set; } = 0;
     }
 }

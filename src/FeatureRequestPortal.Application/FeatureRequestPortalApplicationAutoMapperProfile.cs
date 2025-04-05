@@ -12,6 +12,7 @@ public class FeatureRequestPortalApplicationAutoMapperProfile : Profile
          * into multiple profile classes for a better organization. */
 
         CreateMap<MyFeature, MyFeatureDto>();
-        CreateMap<CreateUpdateMyFeatureDto, MyFeature>();
+        CreateMap<CreateMyFeatureDto, MyFeature>();
+        CreateMap<UpdateMyFeatureDto, MyFeature>();
     }
 }

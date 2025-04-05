@@ -17,7 +17,8 @@ namespace FeatureRequestPortal.MyFeatures
             MyFeatureDto,
             Guid,
             PagedAndSortedResultRequestDto,
-            CreateUpdateMyFeatureDto>,
+            UpdateMyFeatureDto,
+            CreateMyFeatureDto>,
         IMyFeatureAppService
     {
         private readonly IRepository<MyFeature, Guid> _featureRepository;
@@ -159,6 +160,18 @@ namespace FeatureRequestPortal.MyFeatures
             {
                 ScoreType = userFeatureScore.ScoreType
             };
+        }
+
+        public async Task ApproveFeatureAsync(UpdateFeatureApproveDto input)
+        {
+            var feature = await _featureRepository.FirstOrDefaultAsync(f => f.Id == input.FeatureId);
+            if (feature == null)
+            {
+                throw new UserFriendlyException("Özellik bulunamadı.");
+            }
+
+            feature.IsApproved = input.IsApproved;
+            await _featureRepository.UpdateAsync(feature);
         }
     }
 }

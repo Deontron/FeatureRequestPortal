@@ -10,9 +10,12 @@ namespace FeatureRequestPortal.MyFeatures
         MyFeatureDto, //Used to show books
         Guid, //Primary key of the book entity
         PagedAndSortedResultRequestDto, //Used for paging/sorting
-        CreateUpdateMyFeatureDto> //Used to create/update a book
+        UpdateMyFeatureDto,
+        CreateMyFeatureDto> //Used to create/update a book
     {
         public Task<object> UpdateFeatureScoreAsync(UpdateFeatureScoreDto input);
         public Task<UserFeatureScoreDto> GetUserFeatureScoreAsync(Guid featureId);
+
+        public Task ApproveFeatureAsync(UpdateFeatureApproveDto input);
     }
 }
