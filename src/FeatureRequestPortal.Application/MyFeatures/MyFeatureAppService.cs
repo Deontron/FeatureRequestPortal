@@ -1,12 +1,14 @@
 ﻿using FeatureRequestPortal.Permissions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Users;
+using Microsoft.EntityFrameworkCore;
 
 namespace FeatureRequestPortal.MyFeatures
 {
@@ -56,6 +58,38 @@ namespace FeatureRequestPortal.MyFeatures
             }
 
             return featureDtos;
+        }
+
+        public async Task<PagedResultDto<MyFeatureDto>> GetFilteredListAsync(int? category, bool? isApproved, int skipCount, int maxResultCount)
+        {
+            var query = await _featureRepository.GetQueryableAsync();
+
+            if (category.HasValue)
+            {
+                query = query.Where(f => f.Category == (MyFeatureCategory)category.Value);
+            }
+
+            if (isApproved.HasValue)
+            {
+                query = query.Where(f => f.IsApproved == isApproved.Value);
+            }
+
+            var totalCount = await query.CountAsync();
+            var items = await query.Skip(skipCount).Take(maxResultCount).ToListAsync();
+
+            var result = items.Select(feature => new MyFeatureDto
+            {
+                Id = feature.Id,
+                Title = feature.Title,
+                Description = feature.Description,
+                Category = feature.Category,
+                CreatorId = feature.CreatorId,
+                CreationTime = feature.CreationTime,
+                IsApproved = feature.IsApproved,
+                Point = feature.Point
+            }).ToList();
+
+            return new PagedResultDto<MyFeatureDto>(totalCount, result);
         }
 
         public async Task<object> UpdateFeatureScoreAsync(UpdateFeatureScoreDto input)

@@ -8,7 +8,49 @@
             order: [[1, "asc"]],
             searching: false,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(featureRequestPortal.myFeatures.myFeature.getList),
+            ajax: function (data, callback, settings) {
+                var categoryFilter = $('#categoryFilter').val();
+                var stateFilter = $('#stateFilter').val();
+
+                var category = categoryFilter === "all" ? null : parseInt(categoryFilter);
+                var isApprovedFilter;
+
+                if (stateFilter === "all") {
+                    isApprovedFilter = null;
+                } else if (stateFilter === "true") {
+                    isApprovedFilter = true;
+                } else if (stateFilter === "false") {
+                    isApprovedFilter = false;
+                }
+
+                console.log("Filters - Category:", category, "isApproved:", isApprovedFilter);
+
+                abp.ajax({
+                    url: abp.appPath + 'api/app/my-feature/filtered-list',
+                    type: 'GET',
+                    data: {
+                        category: category,
+                        isApproved: isApprovedFilter,
+                        skipCount: settings._iDisplayStart,
+                        maxResultCount: settings._iDisplayLength
+                    }
+                }).done(function (result) {
+                    callback({
+                        draw: settings.iDraw,
+                        recordsTotal: result.totalCount,
+                        recordsFiltered: result.filteredCount,
+                        data: result.items
+                    });
+                }).fail(function (error) {
+                    console.error("AJAX Error:", error);
+                    callback({
+                        draw: settings.iDraw,
+                        recordsTotal: 0,
+                        recordsFiltered: 0,
+                        data: []
+                    });
+                });
+            },
             columnDefs: [
                 {
                     title: l('Actions'),
@@ -26,18 +68,13 @@
                                     text: l('Delete'),
                                     visible: abp.auth.isGranted('FeatureRequestPortal.MyFeatures.Delete'),
                                     confirmMessage: function (data) {
-                                        return l(
-                                            'FeatureDeletionConfirmationMessage',
-                                            data.record.title
-                                        );
+                                        return l('FeatureDeletionConfirmationMessage', data.record.title);
                                     },
                                     action: function (data) {
                                         featureRequestPortal.myFeatures.myFeature
                                             .delete(data.record.id)
                                             .then(function () {
-                                                abp.notify.info(
-                                                    l('SuccessfullyDeleted')
-                                                );
+                                                abp.notify.info(l('SuccessfullyDeleted'));
                                                 dataTable.ajax.reload();
                                             });
                                     }
@@ -47,10 +84,7 @@
                                     visible: abp.auth.isGranted('FeatureRequestPortal.MyFeatures.Approve'),
                                     action: function (data) {
                                         featureRequestPortal.myFeatures.myFeature
-                                            .approve({
-                                                featureId: data.record.id,
-                                                isApproved: true
-                                            })
+                                            .approve({ featureId: data.record.id, isApproved: true })
                                             .then(function () {
                                                 abp.notify.info(l('SuccessfullyApproved'));
                                                 dataTable.ajax.reload();
@@ -78,7 +112,8 @@
                     data: "description"
                 },
                 {
-                    title: l('Oluşturulma Zamanı'), data: "creationTime",
+                    title: l('Oluşturulma Zamanı'),
+                    data: "creationTime",
                     render: function (data) {
                         return luxon
                             .DateTime
@@ -112,5 +147,9 @@
     $(document).on("click", "#NewFeatureButton", function (e) {
         e.preventDefault();
         createModal.open();
+    });
+
+    $('#categoryFilter, #stateFilter').change(function () {
+        dataTable.ajax.reload();
     });
 });

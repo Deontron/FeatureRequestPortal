@@ -27,6 +27,23 @@
 				}
 			</abp-column>
 		</abp-row>
+		<abp-row>
+			<abp-column size-md="_6">
+				<select id="categoryFilter" class="form-select">
+					<option value="all">@L["All Categories"]</option>
+					<option value="0">@L["Enum:MyFeatureCategory.0"]</option>
+					<option value="1">@L["Enum:MyFeatureCategory.1"]</option>
+					<option value="2">@L["Enum:MyFeatureCategory.2"]</option>
+				</select>
+			</abp-column>
+			<abp-column size-md="_6">
+				<select id="stateFilter" class="form-select">
+					<option value="all">@L["All States"]</option>
+					<option value="true">@L["Approved"]</option>
+					<option value="false">@L["Not Approved"]</option>
+				</select>
+			</abp-column>
+		</abp-row>
 	</abp-card-header>
 
 	<abp-card-body>
