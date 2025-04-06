@@ -30,7 +30,10 @@
         "Permission:MyFeatures.Edit": "Editing the Features",
         "Permission:MyFeatures.Approve": "Approving the Features",
         "Permission:MyFeatures.Delete": "Deleting the Features",
-        "Permission:MyFeatures.Manage": "Manage the Features"
+        "Permission:MyFeatures.Manage": "Manage the Features",
+        "Permission:MyComment.Create": "Creating new Comments",
+        "Permission:MyComment.Edit": "Editing the Comments",
+        "Permission:MyComment.Delete": "Deleting the Comments"
 
     }
 }

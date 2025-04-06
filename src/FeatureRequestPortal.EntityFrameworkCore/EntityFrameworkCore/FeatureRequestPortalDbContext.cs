@@ -29,6 +29,7 @@ public class FeatureRequestPortalDbContext :
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<MyFeature> MyFeatures { get; set; }
     public DbSet<UserFeatureScore> UserFeatureScores { get; set; }
+    public DbSet<MyComment> MyComments { get; set; }
 
     #region Entities from the modules
 
@@ -101,6 +102,13 @@ public class FeatureRequestPortalDbContext :
         builder.Entity<UserFeatureScore>(b =>
         {
             b.ToTable(FeatureRequestPortalConsts.DbTablePrefix + "UserFeatureScore",
+                FeatureRequestPortalConsts.DbSchema);
+            b.ConfigureByConvention();
+        });
+
+        builder.Entity<MyComment>(b =>
+        {
+            b.ToTable(FeatureRequestPortalConsts.DbTablePrefix + "MyComments",
                 FeatureRequestPortalConsts.DbSchema);
             b.ConfigureByConvention();
         });

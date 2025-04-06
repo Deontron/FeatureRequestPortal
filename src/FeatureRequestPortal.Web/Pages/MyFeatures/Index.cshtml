@@ -79,8 +79,21 @@
                 <h5>Puan:</h5>
                 <p id="featurePoint" class="modal-content-text"></p>
             </div>
+
+            <div class="mb-3">
+                <h5>Yorumlar:</h5>
+                <div id="commentsContainer">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <h5>Yorum Ekle:</h5>
+                <textarea id="newComment" class="form-control" rows="3" placeholder="Yorumunuzu buraya yazın..."></textarea>
+                <button id="addCommentButton" class="btn btn-primary mt-2">Yorum Ekle</button>
+            </div>
         </div>
     </abp-modal-body>
+
     <abp-modal-footer>
         <button class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
         @if (await AuthorizationService.IsGrantedAsync(FeatureRequestPortalPermissions.MyFeatures.Edit))

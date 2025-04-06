@@ -18,6 +18,11 @@ public class FeatureRequestPortalPermissionDefinitionProvider : PermissionDefini
         myFeaturesPermission.AddChild(FeatureRequestPortalPermissions.MyFeatures.Approve, L("Permission:MyFeatures.Approve"));
         myFeaturesPermission.AddChild(FeatureRequestPortalPermissions.MyFeatures.Manage, L("Permission:MyFeatures.Manage"));
 
+        var myCommentPermission = featureRequestPortalGroup.AddPermission(FeatureRequestPortalPermissions.MyComment.Default, L("Permission:MyComment"));
+        myCommentPermission.AddChild(FeatureRequestPortalPermissions.MyComment.Create, L("Permission:MyComment.Create"));
+        myCommentPermission.AddChild(FeatureRequestPortalPermissions.MyComment.Delete, L("Permission:MyComment.Delete"));
+        myCommentPermission.AddChild(FeatureRequestPortalPermissions.MyComment.Edit, L("Permission:MyComment.Edit"));
+
         //Define your own permissions here. Example:
         //myGroup.AddPermission(FeatureRequestPortalPermissions.MyPermission1, L("Permission:MyPermission1"));
     }

@@ -18,4 +18,13 @@ public static class FeatureRequestPortalPermissions
         public const string Approve = Default + ".Approve";
         public const string Manage = Default + ".Manage";
     }
+
+    public static class MyComment
+    {
+        public const string Default = GroupName + ".MyComment";
+
+        public const string Create = Default + ".Create";
+        public const string Delete = Default + ".Delete"; 
+        public const string Edit = Default + ".Edit"; 
+    }
 }

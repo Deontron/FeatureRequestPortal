@@ -137,6 +137,8 @@
                 console.error("Puan çekilirken hata:", error);
             }
 
+            loadFeatureComments(featureId);
+
             let currentUser = abp.currentUser;
             if (currentUser.isAuthenticated && (currentUser.id === featureCreator || currentUser.roles.includes('admin'))) {
                 $("#EditFeatureButton").show();
@@ -256,4 +258,85 @@
 
     $("#categoryFilter").on("change", loadFeatures);
     $("#sortOptions").on("change", loadFeatures);
+
+    async function loadFeatureComments(featureId) {
+        try {
+            const response = await abp.ajax({
+                url: `/api/app/comments/${featureId}`,
+                type: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + abp.auth.getToken()
+                },
+                dataType: 'json',
+                success: function (data) {
+                    const commentsContainer = $("#commentsContainer");
+                    commentsContainer.empty();
+
+                    if (data.length === 0) {
+                        commentsContainer.append("<p class='text-muted'>Henüz yorum yapılmamış.</p>");
+                        return;
+                    }
+
+                    data.forEach(comment => {
+                        const commentElement = `
+                        <div class="comment-item mb-3">
+                            <strong>${comment.userId}</strong>: ${comment.content} <br>
+                            <small>${new Date(comment.creationTime).toLocaleDateString()}</small>
+                        </div>
+                    `;
+                        commentsContainer.append(commentElement);
+                    });
+                },
+                error: function (error) {
+                    console.error("Yorumlar yüklenirken hata:", error);
+                    alert("Yorumlar yüklenirken bir hata oluştu.");
+                }
+            });
+        } catch (error) {
+            console.error("Yorumlar yüklenirken hata:", error);
+            alert("Yorumlar yüklenirken bir hata oluştu.");
+        }
+    }
+
+    $(document).on("click", "#addCommentButton", function () {
+        const featureId = $("#featureTitle").data("id");
+        const commentContent = $("#newComment").val().trim();
+
+        if (!commentContent) {
+            alert("Lütfen yorumunuzu girin!");
+            return;
+        }
+
+        const inputData = {
+            featureRequestId: featureId,
+            content: commentContent
+        };
+
+        const token = abp.auth.getToken();
+        if (!token) {
+            alert("Giriş yapmanız gerekmektedir.");
+            return;
+        }
+
+        abp.ajax({
+            url: '/api/app/comments',
+            type: 'POST',
+            data: JSON.stringify(inputData),
+            contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'RequestVerificationToken': abp.security.antiForgery.getToken()
+            },
+            success: function () {
+                alert("Yorum başarıyla eklendi.");
+                $("#newComment").val("");
+                loadFeatureComments(featureId);
+            },
+            error: function (error) {
+                console.error("Yorum eklenirken hata:", error);
+                alert("Yorum eklenirken bir hata oluştu.");
+            }
+        });
+    });
+
 });

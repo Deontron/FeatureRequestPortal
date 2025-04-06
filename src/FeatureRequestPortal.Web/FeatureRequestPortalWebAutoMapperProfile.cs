@@ -10,6 +10,9 @@ public class FeatureRequestPortalWebAutoMapperProfile : Profile
         //Define your object mappings here, for the Web project
         CreateMap<MyFeatureDto, CreateMyFeatureDto>();
         CreateMap<MyFeatureDto, UpdateMyFeatureDto>();
+
+        CreateMap<MyComment, MyCommentDto>();
+        CreateMap<CreateMyCommentDto, MyComment>();
     }
 }
 

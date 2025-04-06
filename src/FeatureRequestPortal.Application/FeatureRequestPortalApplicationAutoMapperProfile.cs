@@ -14,5 +14,9 @@ public class FeatureRequestPortalApplicationAutoMapperProfile : Profile
         CreateMap<MyFeature, MyFeatureDto>();
         CreateMap<CreateMyFeatureDto, MyFeature>();
         CreateMap<UpdateMyFeatureDto, MyFeature>();
+
+        CreateMap<MyComment, MyCommentDto>();
+        CreateMap<CreateMyCommentDto, MyComment>();
+        CreateMap<UpdateMyCommentDto, MyComment>();
     }
 }
