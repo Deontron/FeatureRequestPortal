@@ -15,7 +15,7 @@ namespace FeatureRequestPortal.MyFeatures
     {
         public Task<object> UpdateFeatureScoreAsync(UpdateFeatureScoreDto input);
         public Task<UserFeatureScoreDto> GetUserFeatureScoreAsync(Guid featureId);
-
         public Task ApproveFeatureAsync(UpdateFeatureApproveDto input);
+        Task<MyFeatureDto> GetFeatureDetailsAsync(Guid id);
     }
 }

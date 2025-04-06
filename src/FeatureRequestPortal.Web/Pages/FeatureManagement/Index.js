@@ -48,7 +48,7 @@
                                     action: function (data) {
                                         featureRequestPortal.myFeatures.myFeature
                                             .approve({
-                                                featureId: data.record.id,  // 👈 BU ŞART!
+                                                featureId: data.record.id,
                                                 isApproved: true
                                             })
                                             .then(function () {
@@ -59,7 +59,6 @@
                                             });
                                     }
                                 }
-
                             ]
                     }
                 },

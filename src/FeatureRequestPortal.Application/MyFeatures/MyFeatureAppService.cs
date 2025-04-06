@@ -173,5 +173,25 @@ namespace FeatureRequestPortal.MyFeatures
             feature.IsApproved = input.IsApproved;
             await _featureRepository.UpdateAsync(feature);
         }
+
+        public async Task<MyFeatureDto> GetFeatureDetailsAsync(Guid id)
+        {
+            var feature = await _featureRepository.FirstOrDefaultAsync(f => f.Id == id);
+            if (feature == null)
+            {
+                throw new UserFriendlyException("Özellik bulunamadı.");
+            }
+
+            return new MyFeatureDto
+            {
+                Id = feature.Id,
+                Title = feature.Title,
+                Description = feature.Description,
+                Category = feature.Category,
+                CreatorId = feature.CreatorId,
+                CreationTime = feature.CreationTime,
+                Point = feature.Point
+            };
+        }
     }
 }

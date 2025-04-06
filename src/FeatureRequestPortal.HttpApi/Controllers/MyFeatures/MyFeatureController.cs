@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Volo.Abp;
 
 namespace FeatureRequestPortal.MyFeatures
 {
@@ -50,5 +51,23 @@ namespace FeatureRequestPortal.MyFeatures
             return _featureAppService.ApproveFeatureAsync(input);
         }
 
+        [HttpGet("{id:guid}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeatureDetailsAsync(Guid id)
+        {
+            try
+            {
+                var feature = await _featureAppService.GetFeatureDetailsAsync(id);
+                return Ok(feature);
+            }
+            catch (UserFriendlyException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Internal server error", details = ex.Message });
+            }
+        }
     }
 }

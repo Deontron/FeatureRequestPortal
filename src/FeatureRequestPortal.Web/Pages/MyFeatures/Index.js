@@ -120,7 +120,7 @@
             }
 
             let currentUser = abp.currentUser;
-            if (currentUser.id === featureCreator || currentUser.roles.includes('admin')) {
+            if (currentUser.isAuthenticated && (currentUser.id === featureCreator || currentUser.roles.includes('admin'))) {
                 $("#EditFeatureButton").show();
                 $("#DeleteFeatureButton").show();
             } else {
@@ -236,4 +236,3 @@
         return abp.localization.localize('Enum:MyFeatureCategory.' + category, 'FeatureRequestPortal');
     }
 });
-
