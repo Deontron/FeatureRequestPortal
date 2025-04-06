@@ -21,7 +21,7 @@
         "AreYouSureToDelete": "Are you sure you want to delete this item?",
         "Enum:MyFeatureCategory.0": "Undefined",
         "Enum:MyFeatureCategory.1": "Update",
-        "Enum:MyFeatureCategory.2": "new",
+        "Enum:MyFeatureCategory.2": "New",
         "FeatureDeletionConfirmationMessage": "Are you sure to delete the feature '{0}'?",
         "SuccessfullyDeleted": "Successfully deleted!",
         "Permission:FeatureRequestPortal": "Feature Request Portal",

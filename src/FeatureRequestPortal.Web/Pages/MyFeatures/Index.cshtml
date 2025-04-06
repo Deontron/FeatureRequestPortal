@@ -28,6 +28,22 @@
                 }
             </abp-column>
         </abp-row>
+        <abp-row>
+            <abp-column size-md="_6">
+                <select id="categoryFilter" class="form-select">
+                    <option value="all">@L["All Categories"]</option>
+                    <option value="0">@L["Enum:MyFeatureCategory.0"]</option>
+                    <option value="1">@L["Enum:MyFeatureCategory.1"]</option>
+                    <option value="2">@L["Enum:MyFeatureCategory.2"]</option>
+                </select>
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                <select id="sortOptions" class="form-select">
+                    <option value="default">@L["Default"]</option>
+                    <option value="highestVotes">@L["Highest Votes"]</option>
+                </select>
+            </abp-column>
+        </abp-row>
     </abp-card-header>
 
     <abp-card-body>
@@ -147,4 +163,3 @@
             border-color: #bd2130;
         }
 </style>
-

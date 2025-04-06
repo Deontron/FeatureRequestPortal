@@ -22,6 +22,24 @@
             return;
         }
 
+        let selectedCategory = $("#categoryFilter").val();
+        let selectedSortOption = $("#sortOptions").val();
+
+
+        if (selectedCategory !== "all") {
+            let selectedCategoryInt = parseInt(selectedCategory); 
+            features = features.filter(function (feature) {
+                return feature.category === selectedCategoryInt;
+            });
+        }
+
+
+        if (selectedSortOption === "highestVotes") {
+            features.sort(function (a, b) {
+                return b.point - a.point;
+            });
+        }
+
         for (let feature of features) {
             let likeClass = 'btn-outline-success';
             let dislikeClass = 'btn-outline-danger';
@@ -235,4 +253,7 @@
     function localizeCategory(category) {
         return abp.localization.localize('Enum:MyFeatureCategory.' + category, 'FeatureRequestPortal');
     }
+
+    $("#categoryFilter").on("change", loadFeatures);
+    $("#sortOptions").on("change", loadFeatures);
 });

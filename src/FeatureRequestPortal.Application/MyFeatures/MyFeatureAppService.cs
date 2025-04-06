@@ -74,10 +74,10 @@ namespace FeatureRequestPortal.MyFeatures
                 {
                     if (input.ScoreType == "like")
                     {
-                        feature.Point--;  
-                        userScore.ScoreType = "none";  
+                        feature.Point--;
+                        userScore.ScoreType = "none";
                         await _userFeatureScoreRepository.UpdateAsync(userScore);
-                        await _featureRepository.UpdateAsync(feature);  
+                        await _featureRepository.UpdateAsync(feature);
                         return new
                         {
                             message = "Like işlemi iptal edildi.",
@@ -144,7 +144,6 @@ namespace FeatureRequestPortal.MyFeatures
                 point = feature.Point
             };
         }
-
 
         public async Task<UserFeatureScoreDto> GetUserFeatureScoreAsync(Guid featureId)
         {
