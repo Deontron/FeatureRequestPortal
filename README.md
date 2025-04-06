@@ -8,7 +8,7 @@ Proje, Volosoft Staj Başvurusu kapsamında hazırlanmış ve ABP Framework kull
 
 Projede ayrıca EF Core ve PostgreSQL kullanılarak veritabanı işlemleri gerçekleştirilmiş ve React.js ile frontend tarafında kullanıcı etkileşimleri sağlanmıştır.
 
-### Gereksinimler
+## Gereksinimler
 
 *.NET SDK 9.0+ - Proje, .NET SDK'sı ile geliştirilmiştir. Projeyi çalıştırabilmek için bu sürüm veya üstü gereklidir.
 
@@ -17,29 +17,29 @@ Projede ayrıca EF Core ve PostgreSQL kullanılarak veritabanı işlemleri gerç
 *PostgreSQL - Veritabanı olarak PostgreSQL kullanılmıştır.
 
 
-#### Kurulum
+## Kurulum
 
-*Backend
+### Backend
 
-*Projeyi klonlayın:
+### Projeyi klonlayın:
 
 git clone <repository-url>
 cd <project-directory>
 
-*Backend bağımlılıklarını yükleyin:
+### Backend bağımlılıklarını yükleyin:
 
 dotnet restore
 dotnet build
 dotnet run
 
-*Frontend
+### Frontend
 
-*Frontend bağımlılıklarını yükleyin:
+### Frontend bağımlılıklarını yükleyin:
 
 npm install
 npm run dev
 
-*Veritabanı Ayarları
+### Veritabanı Ayarları
 
 appsettings.json dosyasını açın ve PostgreSQL bağlantı dizesini aşağıdaki gibi güncelleyin:
 
@@ -47,16 +47,24 @@ appsettings.json dosyasını açın ve PostgreSQL bağlantı dizesini aşağıda
   "Default": "Host=my_host;Database=my_db;Username=my_user;Password=my_password"
 }
 
-*Veritabanını oluşturun:
+### Veritabanını oluşturun:
 
 dotnet ef database update
 
-*Uygulamanın Başlatılması:
+### Uygulamanın Başlatılması:
 
 Backend çalıştırıldıktan sonra, tarayıcıda https://localhost:44390 adresine gidin.
 
-##### Ekran Görüntüleri
+## Ekran Görüntüleri
 
+### Özellikler Sayfası
+![Ekran görüntüsü 2025-04-06 224558](https://github.com/user-attachments/assets/8d29198a-8d39-4299-b3c8-5448fe92063e)
 
+### Detay Sayfası
+![Ekran görüntüsü 2025-04-06 224627](https://github.com/user-attachments/assets/6bba2236-9365-456b-9f0e-e978ee41d1f7)
 
+### Özellik Yönetim Paneli (Adminler İçin)
+![Ekran görüntüsü 2025-04-06 224649](https://github.com/user-attachments/assets/6165a2cf-c7af-4803-bd12-c020d9c7c225)
 
+### Özellik Ekleme
+![Ekran görüntüsü 2025-04-06 224711](https://github.com/user-attachments/assets/2549b469-61b3-42ac-a517-4552dae3a92f)
