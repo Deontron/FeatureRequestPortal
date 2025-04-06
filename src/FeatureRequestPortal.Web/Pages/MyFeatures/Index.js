@@ -312,23 +312,22 @@
             content: commentContent
         };
 
-        const token = abp.auth.getToken();
-        if (!token) {
-            alert("Giriş yapmanız gerekmektedir.");
-            return;
-        }
+        //const token = abp.auth.getToken();
+        //if (!token) {
+        //    alert("Giriş yapmanız gerekmektedir.");
+        //    return;
+        //}
 
         abp.ajax({
             url: '/api/app/comments',
             type: 'POST',
             data: JSON.stringify(inputData),
             contentType: 'application/json',
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'RequestVerificationToken': abp.security.antiForgery.getToken()
-            },
+            //headers: {
+            //    'Authorization': 'Bearer ' + token,
+            //    'RequestVerificationToken': abp.security.antiForgery.getToken()
+            //},
             success: function () {
-                alert("Yorum başarıyla eklendi.");
                 $("#newComment").val("");
                 loadFeatureComments(featureId);
             },
