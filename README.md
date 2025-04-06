@@ -64,7 +64,7 @@ Backend çalıştırıldıktan sonra, tarayıcıda https://localhost:44390 adres
 ![Ekran görüntüsü 2025-04-06 224627](https://github.com/user-attachments/assets/6bba2236-9365-456b-9f0e-e978ee41d1f7)
 
 ### Özellik Yönetim Paneli (Adminler İçin)
-![Ekran görüntüsü 2025-04-06 224649](https://github.com/user-attachments/assets/6165a2cf-c7af-4803-bd12-c020d9c7c225)
+![Ekran görüntüsü 2025-04-06 225535](https://github.com/user-attachments/assets/84aa9873-cd2e-4546-a5b1-3716ddd2b21d)
 
 ### Özellik Ekleme
 ![Ekran görüntüsü 2025-04-06 224711](https://github.com/user-attachments/assets/2549b469-61b3-42ac-a517-4552dae3a92f)
