@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using System;
 using Volo.Abp.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Volo.Abp.AspNetCore.Mvc.AntiForgery;
 
-[AbpAutoValidateAntiforgeryToken]
 [Route("api/app/comments")]
 public class CommentController : AbpController
 {
@@ -25,7 +23,7 @@ public class CommentController : AbpController
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize("FeatureRequestPortal.MyComment.Create")]
     public async Task<MyCommentDto> CreateAsync([FromBody] CreateMyCommentDto input)
     {
         return await _commentAppService.CreateAsync(input);

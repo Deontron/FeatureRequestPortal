@@ -63,6 +63,7 @@
             }
 
             let categoryText = localizeCategory(feature.category);
+            let creatorName = await getUserName(feature.creatorId);
 
             let cardHtml = `
                 <div class="col-md-6 col-lg-4">
@@ -88,7 +89,8 @@
                                 data-title="${feature.title}" 
                                 data-description="${feature.description}"
                                 data-category="${feature.category}"
-                                data-creator="${feature.creatorId}"
+                                data-creatorId="${feature.creatorId}"
+                                data-creator="${creatorName}"
                                 data-date="${new Date(feature.creationTime).toLocaleDateString()}"
                                 data-point="${feature.point}">
                                 Detaylar
@@ -115,6 +117,7 @@
             let featureTitle = $(this).data("title");
             let featureDescription = $(this).data("description");
             let featureCreator = $(this).data("creator");
+            let featureCreatorId = $(this).data("creatorId");
             let featureCreationDate = $(this).data("date");
             let featureCategory = $(this).data("category");
 
@@ -140,7 +143,7 @@
             loadFeatureComments(featureId);
 
             let currentUser = abp.currentUser;
-            if (currentUser.isAuthenticated && (currentUser.id === featureCreator || currentUser.roles.includes('admin'))) {
+            if (currentUser.isAuthenticated && (currentUser.id === featureCreatorId || currentUser.roles.includes('admin'))) {
                 $("#EditFeatureButton").show();
                 $("#DeleteFeatureButton").show();
             } else {
@@ -261,42 +264,41 @@
 
     async function loadFeatureComments(featureId) {
         try {
-            const response = await abp.ajax({
+            const commentsResponse = await abp.ajax({
                 url: `/api/app/comments/${featureId}`,
                 type: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + abp.auth.getToken()
                 },
                 dataType: 'json',
-                success: function (data) {
-                    const commentsContainer = $("#commentsContainer");
-                    commentsContainer.empty();
+            });
 
-                    if (data.length === 0) {
-                        commentsContainer.append("<p class='text-muted'>Henüz yorum yapılmamış.</p>");
-                        return;
-                    }
+            const userIds = commentsResponse.map(comment => comment.userId);
 
-                    data.forEach(comment => {
-                        const commentElement = `
-                        <div class="comment-item mb-3">
-                            <strong>${comment.userId}</strong>: ${comment.content} <br>
-                            <small>${new Date(comment.creationTime).toLocaleDateString()}</small>
-                        </div>
-                    `;
-                        commentsContainer.append(commentElement);
-                    });
-                },
-                error: function (error) {
-                    console.error("Yorumlar yüklenirken hata:", error);
-                    alert("Yorumlar yüklenirken bir hata oluştu.");
-                }
+            const usersResponse = await Promise.all(userIds.map(userId => getUserName(userId)));
+
+            const commentsContainer = $("#commentsContainer");
+            commentsContainer.empty();
+
+            if (commentsResponse.length === 0) {
+                commentsContainer.append("<p class='text-muted'>Henüz yorum yapılmamış.</p>");
+                return;
+            }
+
+            commentsResponse.forEach((comment, index) => {
+                const commentElement = `
+                <div class="comment-item mb-3">
+                    <strong>${usersResponse[index]}</strong>: ${comment.content} <br>
+                    <small>${new Date(comment.creationTime).toLocaleDateString()}</small>
+                </div>
+            `;
+                commentsContainer.append(commentElement);
             });
         } catch (error) {
             console.error("Yorumlar yüklenirken hata:", error);
-            alert("Yorumlar yüklenirken bir hata oluştu.");
         }
     }
+
 
     $(document).on("click", "#addCommentButton", function () {
         const featureId = $("#featureTitle").data("id");
@@ -333,9 +335,20 @@
             },
             error: function (error) {
                 console.error("Yorum eklenirken hata:", error);
-                alert("Yorum eklenirken bir hata oluştu.");
             }
         });
     });
 
+    async function getUserName(userId) {
+        try {
+            let userResponse = await abp.ajax({
+                url: abp.appPath + `api/identity/users/${userId}`, 
+                type: 'GET'
+            });
+            return userResponse.userName;
+        } catch (error) {
+            console.error("Kullanıcı adı çekilirken hata:", error);
+            return "Bilinmiyor"; 
+        }
+    }
 });
