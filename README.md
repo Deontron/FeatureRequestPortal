@@ -6,7 +6,7 @@ FeatureRequestPortal, bir özellik talepleri platformudur. Bu platform, kullanı
 
 Proje, Volosoft Staj Başvurusu kapsamında hazırlanmış ve ABP Framework kullanılarak geliştirilmiştir. ABP Framework, modüler yapısı ile projeyi daha sürdürülebilir ve kolay yönetilebilir hale getirmektedir.
 
-Projede ayrıca EF Core ve PostgreSQL kullanılarak veritabanı işlemleri gerçekleştirilmiş ve React.js ile frontend tarafında kullanıcı etkileşimleri sağlanmıştır.
+Projede ayrıca EF Core ve PostgreSQL kullanılarak veritabanı işlemleri gerçekleştirilmiştir. Arayüz, ABP’nin kendi MVC tabanlı yapısı kullanılarak Razor Pages olmadan oluşturulmuştur.
 
 ## Gereksinimler
 
@@ -58,13 +58,21 @@ Backend çalıştırıldıktan sonra, tarayıcıda https://localhost:44390 adres
 ## Ekran Görüntüleri
 
 ### Özellikler Sayfası
+
+Kullanıcıların tüm talepleri liste halinde görebildiği sayfadır. Talepler, başlık, açıklama ve oy sayısı ile birlikte görüntülenir. Kullanıcılar bu sayfa üzerinden taleplere oy verebilir.
 ![Ekran görüntüsü 2025-04-06 224558](https://github.com/user-attachments/assets/8d29198a-8d39-4299-b3c8-5448fe92063e)
 
 ### Detay Sayfası
+
+Bir özelliğin detaylarının yer aldığı sayfadır. Kullanıcılar burada taleple ilgili daha fazla bilgi alabilir, yorum yapabilir ve mevcut oy durumunu görebilir.
 ![Ekran görüntüsü 2025-04-06 224627](https://github.com/user-attachments/assets/6bba2236-9365-456b-9f0e-e978ee41d1f7)
 
 ### Özellik Yönetim Paneli (Adminler İçin)
+
+Yalnızca yöneticilerin erişebildiği bu panel üzerinden talepler onaylanabilir, reddedilebilir veya güncellenebilir. Taleplerin durumu buradan kolayca yönetilebilir.
 ![Ekran görüntüsü 2025-04-06 225535](https://github.com/user-attachments/assets/84aa9873-cd2e-4546-a5b1-3716ddd2b21d)
 
 ### Özellik Ekleme
+
+Kullanıcıların yeni özellik taleplerini iletebildiği form ekranıdır. Başlık ve açıklama alanları doldurularak yeni talepler sisteme eklenebilir.
 ![Ekran görüntüsü 2025-04-06 224711](https://github.com/user-attachments/assets/2549b469-61b3-42ac-a517-4552dae3a92f)
